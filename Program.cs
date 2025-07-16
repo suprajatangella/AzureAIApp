@@ -1,8 +1,12 @@
-﻿using System;
-using Azure;
+﻿using Azure;
 using Azure.AI.DocumentIntelligence;
 using Azure.AI.Vision.ImageAnalysis;
 using AzureAIApp.Services;
+using Microsoft.CognitiveServices.Speech;
+using Microsoft.CognitiveServices.Speech.Audio;
+using System;
+using System.Globalization;
+using System.Text;
 class Program
 {
     static async Task Main(string[] args)
@@ -27,6 +31,25 @@ class Program
         await AnalyseImage(client, imagePath);
         await AnalyseFieldsFromDocument(docClient);
         await GetAiResponse();
+
+        // This example requires environment variables named "SPEECH_KEY" and "ENDPOINT"
+         string speechKey = Environment.GetEnvironmentVariable("SPEECH_KEY");
+         string speechEndpoint = Environment.GetEnvironmentVariable("SPEECH_ENDPOINT");
+
+        var speechConfig = SpeechConfig.FromSubscription(speechKey, "eastus");
+        speechConfig.SpeechRecognitionLanguage = "en-US";
+
+        // Optional delay to give the mic time to initialize
+        Console.WriteLine("Preparing to listen...");
+        await Task.Delay(5000); // Wait for 2 seconds
+
+        using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
+        using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
+
+        Console.WriteLine("Speak into your microphone.");
+        var speechRecognitionResult = await speechRecognizer.RecognizeOnceAsync();
+        var speechService = new SpeechService();
+        speechService.OutputSpeechRecognitionResult(speechRecognitionResult);
 
         Console.WriteLine("Press any key to exit...");
         Console.ReadLine();
@@ -62,5 +85,7 @@ class Program
         Console.WriteLine("AI response received.");
         
     }
+
+  
 }
 
