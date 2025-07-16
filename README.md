@@ -45,7 +45,7 @@ Used to:
 - Summarize document contents or OCR results.
 - Enable intelligent chat features.
 
-Test Results:
+Document Intelligence Test Results:
 
 <img width="1461" height="516" alt="image" src="https://github.com/user-attachments/assets/3b55d3d1-27fb-4fae-af81-cb8d72de1974" />
 
