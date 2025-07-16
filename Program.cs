@@ -4,15 +4,12 @@ using Azure.AI.Vision.ImageAnalysis;
 using AzureAIApp.Services;
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Audio;
-using System;
-using System.Globalization;
-using System.Text;
 class Program
 {
     static async Task Main(string[] args)
     {
         // Your Azure credentials
-        string? endpoint = Environment.GetEnvironmentVariable("VISION_ENDPOINT") ?? "https://<your-resource-name>.openai.azure.com/";  
+        string? endpoint = Environment.GetEnvironmentVariable("VISION_ENDPOINT") ?? "https://<your-resource-name>.openai.azure.com/";
         string? apiKey = Environment.GetEnvironmentVariable("VISION_KEY") ?? "<your-key>";
 
         // Create an Image Analysis client.
@@ -33,8 +30,8 @@ class Program
         await GetAiResponse();
 
         // This example requires environment variables named "SPEECH_KEY" and "ENDPOINT"
-         string speechKey = Environment.GetEnvironmentVariable("SPEECH_KEY");
-         string speechEndpoint = Environment.GetEnvironmentVariable("SPEECH_ENDPOINT");
+        string speechKey = Environment.GetEnvironmentVariable("SPEECH_KEY");
+        string speechEndpoint = Environment.GetEnvironmentVariable("SPEECH_ENDPOINT");
 
         var speechConfig = SpeechConfig.FromSubscription(speechKey, "eastus");
         speechConfig.SpeechRecognitionLanguage = "en-US";
@@ -83,9 +80,9 @@ class Program
         Console.WriteLine("Getting AI response...");
         await openAiService.GetAiResponse();
         Console.WriteLine("AI response received.");
-        
+
     }
 
-  
+
 }
 

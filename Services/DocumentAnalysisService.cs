@@ -1,18 +1,12 @@
 ﻿using Azure;
 using Azure.AI.DocumentIntelligence;
-using Azure.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AzureAIApp.Services
 {
     public class DocumentAnalysisService
     {
         public async Task AnalyseFieldsFromInvoice(DocumentIntelligenceClient docClient)
-        { 
+        {
             ////
             Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/cognitive-services-REST-api-samples/master/curl/form-recognizer/invoice_sample.jpg");
             // Analyze a document using the prebuilt-invoice model.
