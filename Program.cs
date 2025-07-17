@@ -25,16 +25,16 @@ class Program
         // Local image or URL
         string imagePath = Path.Combine(projectRoot, "image", "3.png");
 
-        await AnalyseImage(client, imagePath);
-        await AnalyseFieldsFromDocument(docClient);
-        await GetAiResponse();
+        //await AnalyseImage(client, imagePath);
+        //await AnalyseFieldsFromDocument(docClient);
+        //await GetAiResponse();
 
         // This example requires environment variables named "SPEECH_KEY" and "ENDPOINT"
         string speechKey = Environment.GetEnvironmentVariable("SPEECH_KEY");
         string speechEndpoint = Environment.GetEnvironmentVariable("SPEECH_ENDPOINT");
 
         var speechConfig = SpeechConfig.FromSubscription(speechKey, "eastus");
-        speechConfig.SpeechRecognitionLanguage = "en-US";
+        //speechConfig.SpeechRecognitionLanguage = "en-US";
 
         // Optional delay to give the mic time to initialize
         Console.WriteLine("Preparing to listen...");
@@ -48,8 +48,21 @@ class Program
         var speechService = new SpeechService();
         speechService.OutputSpeechRecognitionResult(speechRecognitionResult);
 
+        // The neural multilingual voice can speak different languages based on the input text.
+        speechConfig.SpeechSynthesisVoiceName = "en-US-AvaMultilingualNeural";
+
+        using (var speechSynthesizer = new SpeechSynthesizer(speechConfig))
+        {
+            // Get text from the console and synthesize to the default speaker.
+            Console.WriteLine("Enter some text that you want to speak >");
+            string text = Console.ReadLine();
+
+            var speechSynthesisResult = await speechSynthesizer.SpeakTextAsync(text);
+            speechService.OutputSpeechSynthesisResult(speechSynthesisResult, text);
+        }
+
         Console.WriteLine("Press any key to exit...");
-        Console.ReadLine();
+        Console.ReadKey();
     }
 
     public static async Task AnalyseImage(ImageAnalysisClient client, string imagePath)

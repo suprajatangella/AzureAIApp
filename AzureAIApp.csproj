@@ -14,4 +14,8 @@
     <PackageReference Include="Microsoft.CognitiveServices.Speech" Version="1.45.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include=".gituhb\workflows\" />
+  </ItemGroup>
+
 </Project>
